@@ -40,6 +40,9 @@ prebuilt_image_namespace="$(plugin_read_config PREBUILT_IMAGE_NAMESPACE 'docker-
 
 # Then we figure out what to push, and where
 for line in $(plugin_read_list PUSH) ; do
+  if [[ "$(plugin_read_config INTERPOLATE_PUSH_VARS 'false')" == "true" ]]; then
+    line="$(echo "$line" | envsubst)" # TODO: allowlist?
+  fi
   IFS=':' read -r -a tokens <<< "$line"
   service_name=${tokens[0]}
   service_image="$(compose_image_for_service "$service_name")"

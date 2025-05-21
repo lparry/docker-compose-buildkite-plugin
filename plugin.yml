@@ -98,6 +98,8 @@ configuration:
       type: boolean
     graceful-shutdown:
       type: boolean
+    interpolate-push-vars:
+      type: boolean
     leave-volumes:
       type: boolean
     mount-buildkite-agent:
