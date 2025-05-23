@@ -41,7 +41,11 @@ prebuilt_image_namespace="$(plugin_read_config PREBUILT_IMAGE_NAMESPACE 'docker-
 # Then we figure out what to push, and where
 for line in $(plugin_read_list PUSH) ; do
   if [[ "$(plugin_read_config EXPAND_PUSH_VARS 'false')" == "true" ]]; then
-    push_target=$(eval echo "$line")
+    if [[ "$(plugin_read_config EXPAND_PUSH_VARS_ALLOWLIST '__UNSET__')" == "__UNSET__" ]]; then
+      push_target="$(expand_var "$line")"
+    else
+      push_target="$(expand_var "$line" "$(plugin_read_config EXPAND_PUSH_VARS_ALLOWLIST '__UNSET__')")"
+    fi
   else
     push_target="$line"
   fi
