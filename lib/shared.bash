@@ -325,11 +325,14 @@ function retry {
 function expand_var() {
   # Use the safer approach where possible
   if command -v envsubst; then
+    echo "found envsubst"
     if [[ $# -eq 1 ]]; then
       # safer
+      echo "found envsubst safer"
       expand_var_with_envsubst "$1"
     else
       # safest
+      echo "found envsubst safest"
       expand_var_with_envsubst "$1" "$2"
     fi
   else
