@@ -154,4 +154,5 @@ while read -r arg ; do
 done <<< "$(plugin_read_list ARGS)"
 
 echo "${group_type} :docker: Building services ${services[*]}"
+echo "${build_params[@]}" "${services[@]}"
 run_docker_compose "${build_params[@]}" "${services[@]}"
